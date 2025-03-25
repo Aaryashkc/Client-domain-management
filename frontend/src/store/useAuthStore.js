@@ -9,16 +9,10 @@ export const useAuthStore = create((set, get) => ({
   isLoggingIn: false,
   isCheckingAuth: true,
 
+
   checkAuth: async () => {
     try {
-      const token = localStorage.getItem("token"); // Retrieve the token from local storage
-
-      if (!token) {
-        set({ authUser: null, isCheckingAuth: false });
-        return;
-      }
       const res = await axiosInstance.get("/auth/check");
-      console.log("Response from server:", res.data);
 
       set({ authUser: res.data });
     } catch (error) {
