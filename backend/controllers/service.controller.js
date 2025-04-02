@@ -2,10 +2,22 @@ import Service from '../models/service.model.js';
 
 export const createService = async (req, res) => {
   try {
-    const { clientId, serviceProviderId, startDate, duration, serviceType, serviceName } = req.body;
+    const { clientId, serviceProviderId, startDate, duration, serviceType, serviceName, emails, domainCostPerYear, hostingCostPerGB } = req.body;
 
-    if (!clientId || !serviceProviderId || !startDate || !duration || !serviceType || !serviceName) {
+    if (!clientId || !serviceProviderId || !startDate || !duration || !serviceType || !serviceName || !emails) {
       return res.status(400).send({ message: "All fields are required" });
+    }
+
+    if (serviceType === 'domain only' && !domainCostPerYear) {
+      return res.status(400).send({ message: "Domain cost per year is required for 'domain only' service type" });
+    }
+    
+    if (serviceType === 'hosting only' && !hostingCostPerGB) {
+      return res.status(400).send({ message: "Hosting cost per GB is required for 'hosting only' service type" });
+    }
+    
+    if (serviceType === 'domain + hosting' && (!domainCostPerYear || !hostingCostPerGB)) {
+      return res.status(400).send({ message: "Both domain cost per year and hosting cost per GB are required for 'domain + hosting' service type" });
     }
 
     const service = new Service({
@@ -15,7 +27,10 @@ export const createService = async (req, res) => {
       duration,
       serviceType,
       serviceName,
+      domainCostPerYear: serviceType === 'domain only' || serviceType === 'domain + hosting' ? domainCostPerYear : undefined,
+      hostingCostPerGB: serviceType === 'hosting only' || serviceType === 'domain + hosting' ? hostingCostPerGB : undefined,
       endDate: calculateEndDate(startDate, duration), 
+      emails,
     });
 
     const data = await service.save();
@@ -27,8 +42,6 @@ export const createService = async (req, res) => {
     });
   }
 };
-
-
 
 export const getServices = async (req, res) => {
   try {
@@ -56,6 +69,36 @@ export const getService = async (req, res) => {
   } catch (err) {
     res.status(500).send({
       message: err.message || `Error retrieving service with id=${id}`
+    });
+  }
+};
+
+export const updateServiceEmails = async (req, res) => {
+  const serviceId = req.params.id;
+  const { emails } = req.body;
+
+  try {
+    // Validate input
+    if (!Array.isArray(emails)) {
+      return res.status(400).send({ message: "Emails must be an array of email IDs" });
+    }
+
+    // Find and update the service
+    const service = await Service.findByIdAndUpdate(
+      serviceId, 
+      { emails }, 
+      { new: true }  // Return the updated document
+    );
+
+    if (!service) {
+      return res.status(404).send({ message: "Service not found" });
+    }
+
+    res.send(service);
+  } catch (err) {
+    console.error("Error updating service emails:", err);
+    res.status(500).send({
+      message: err.message || "Some error occurred while updating service emails."
     });
   }
 };

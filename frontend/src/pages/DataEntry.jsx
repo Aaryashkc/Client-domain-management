@@ -49,7 +49,7 @@ const DataEntry = () => {
   }
 
   return (
-    <div className="mt-20 max-w-2xl mx-auto p-6 bg-gray-200 text-blue-900 rounded-lg shadow-lg">
+    <div className="mt-20 max-w-2xl mx-auto p-6 bg-gray-100 text-blue-900 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-6 text-center">Add New Client</h2>
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Company Name */}
@@ -141,6 +141,18 @@ const DataEntry = () => {
                 className="h-5 w-5 text-gray-600 focus:ring-2 focus:ring-gray-500"
               />
               <label htmlFor="internal" className="ml-2 text-gray-600 cursor-pointer">Internal</label>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                id="others"
+                name="clientType"
+                value="others"
+                checked={clientType === 'others'}
+                onChange={(e) => setClientType(e.target.value)}
+                className="h-5 w-5 text-gray-600 focus:ring-2 focus:ring-gray-500"
+              />
+              <label htmlFor="others" className="ml-2 text-gray-600 cursor-pointer">Others</label>
             </div>
           </div>
         </div>

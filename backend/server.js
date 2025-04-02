@@ -9,6 +9,7 @@ import clientRoutes from "./routes/client.route.js"
 import serviceRoutes from "./routes/service.route.js";
 import { startExpirationCheck } from './mail/mail.js';
 import providerRoutes from "./routes/provider.route.js"
+import emailRoutes from "./routes/email.route.js"
 
 dotenv.config()
 
@@ -28,6 +29,7 @@ app.use("/api/auth", authRoutes)
 app.use('/api/client', clientRoutes); 
 app.use('/api/service', serviceRoutes);
 app.use('/api/service-provider', providerRoutes);
+app.use('/api/email', emailRoutes);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '/frontend/dist')));

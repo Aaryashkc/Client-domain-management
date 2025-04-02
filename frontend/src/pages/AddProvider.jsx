@@ -43,7 +43,7 @@ const AddProvider = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-gray-100 min-h-screen">
       <div className="mt-20 max-w-md mx-auto bg-white shadow-md rounded-lg p-8">
         <div className="flex items-center justify-center mb-6">
           <h2 className="text-2xl font-bold text-gray-800">Add New Service Provider</h2>

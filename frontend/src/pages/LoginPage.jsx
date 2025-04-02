@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
-import { Link } from "react-router-dom";
 import { Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 
 const LoginPage = () => {
@@ -90,14 +89,14 @@ const LoginPage = () => {
           </button>
         </form>
 
-        <div className="text-center mt-6">
+        {/* <div className="text-center mt-6">
           <p className="text-gray-600">
             Don&apos;t have an account?{" "}
             <Link to="/signup" className="text-blue-900 hover:underline">
               Create account
             </Link>
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

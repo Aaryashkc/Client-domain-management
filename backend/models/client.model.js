@@ -35,11 +35,11 @@ const clientSchema = new mongoose.Schema({
   clientType: {
     type: String,
     required: true,
-    enum: ["external", "internal"],
+    enum: ["external", "internal", "others"],
   },
   clientStatus: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 }, { timestamps: true });
 

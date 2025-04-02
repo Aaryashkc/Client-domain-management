@@ -27,11 +27,27 @@ const serviceSchema = new mongoose.Schema({
   serviceType: {
     type: String,
     required: true,
-    enum: ['domain only', 'domain + hosting'],
+    enum: ['domain only', 'hosting only', 'domain + hosting'],
   },
   serviceName: {
     type: String,
-    required: true,},
+    required: true,
+  },
+  emails: [{ type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Email' }],
+
+    domainCostPerYear: { 
+      type: Number, 
+      required: function() { 
+        return this.serviceType === 'domain only' || this.serviceType === 'domain + hosting'; 
+      } 
+    },
+    hostingCostPerGB: { 
+      type: Number, 
+      required: function() { 
+        return this.serviceType === 'hosting only' || this.serviceType === 'domain + hosting'; 
+      } 
+    }
     
 }, { timestamps: true });
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from '../assets/logo.png'
 import { useAuthStore } from '../store/useAuthStore'
-import { LogOut, User, Home, Database } from 'lucide-react'
+import { LogOut, User, Home, Database, Mail } from 'lucide-react'
 import { Link } from "react-router-dom"
 
 const Navbar = () => {
@@ -27,6 +27,10 @@ const Navbar = () => {
           <Link to="/serviceprovider" className="flex gap-2 items-center hover:text-blue-200 transition-colors py-2">
             <Database className="size-5" />
             <span className="hidden sm:inline">Service Provider</span>
+          </Link>
+          <Link to="/emaildashboard" className="flex gap-2 items-center hover:text-blue-200 transition-colors py-2">
+            <Mail className="size-5" />
+            <span className="hidden sm:inline">Email</span>
           </Link>
 
           <button 
